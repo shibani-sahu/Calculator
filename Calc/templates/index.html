@@ -2,56 +2,24 @@
 <html lang="en">
 <head>
         <title>Calculator</title>
-        <style>
-            body{
-                font-family: Arial;
-                display: flex;
-                height: 100vh;
-                justify-content: center;
-                align-items: center;
-                background: #f0f0f0;
-            }
-            .calculator{
-                background: white;
-                padding: 20px;
-                border-radius: 10px;
-
-            }
-            input {
-                margin: 5px 0;
-                padding: 10px;
-                width: 90%;
-            }
-            button, select{
-                margin: 5px 0;
-                padding: 10px ;
-                width: 50%;
-                align-items: center;
-                justify-content: center;
-        
-            }
-            
-        </style>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'calculator/style.css' % }">
 </head>
 <body>
-<div class="calculator">
-    <h2>Simple Calculator</h2>
-    <form method="post">
-        {% csrf_token %}
-        <input type="number" name="num1" placeholder="Enter first number" required><br>
-        <select name="operation">
-            <option value="add">+</option>
-            <option value="subtract">-</option>
-            <option value="multiply">*</option>
-            <option value="divide">/</option>
-
-        </select><br>
-        <input type="number" name="num2" placeholder="Enter second number" required><br>
-        <button type="submit">Calculator</button>
-    </form>
-    {% if result is not None %}
-        <h3>Result: {{ result }}</h3>
-    {% endif %}
-</div>   
+    <div class="calculator">
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="expression" value=""{{expression}} readonly><br>
+            <div class="buttons">
+                {% for row in layout %}
+                    <div class="row">
+                        {% for button in row %}
+                        <button  type="submit" name="btn" value="{{button}}">{{button}}</button>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </form>
+    </div>   
 </body>
 </html>
